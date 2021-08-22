@@ -20,26 +20,21 @@ public class Produto {
 	private String descricao;
 	private Integer quantidade;
 	private BigDecimal preco;
-	private LocalDate dataCriacao;
+	private LocalDate dataCriacao  = LocalDate.now();
 	private LocalDate dataAltecacao;
 	
 	//CONSTRUTOR
-	public Produto(
-			String nome,
-			String descricao,
-			Integer quantidade,
-			BigDecimal preco,
-			LocalDate dataCriacao,
-			LocalDate dataAltecacao) {
-		super();
+	public Produto(String nome, String descricao, Integer quantidade, BigDecimal preco) {
 		this.nome = nome;
 		this.descricao = descricao;
 		this.quantidade = quantidade;
 		this.preco = preco;
-		this.dataCriacao = dataCriacao;
-		this.dataAltecacao = dataAltecacao;
+		this.dataCriacao = LocalDate.now();
 	}
 	
+	public Produto() {
+	}
+
 	//GETTERS AND SETTERS
 	public Long getId() {
 		return id;
