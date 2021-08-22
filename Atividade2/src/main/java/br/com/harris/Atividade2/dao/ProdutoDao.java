@@ -1,6 +1,6 @@
 package br.com.harris.Atividade2.dao;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -9,53 +9,39 @@ import br.com.harris.Atividade2.modelo.Produto;
 
 public class ProdutoDao {
 
+	//EntitinyManager
 	private EntityManager em;
-
 	public ProdutoDao(EntityManager em) {
 		this.em = em;
 	}
 
+	//Funcoes
+	//Cadastrar
 	public void cadastrar(Produto produto) {
-		this.em.persist(produto);
+		em.persist(produto);
 	}
-
-	public void atualizar(Produto produto) {
-		this.em.merge(produto);
+	//Atualizar
+	public Produto atualizar(Produto produto) {
+        produto.setDataCriacao(LocalDate.now());
+        return em.merge(produto);
 	}
-
+	//Remover
 	public void remover(Produto produto) {
 		produto = em.merge(produto);
-		this.em.remove(produto);
+        em.remove(produto);
 	}
-
+	//BuscaId
 	public Produto buscarPorId(Long id) {
 		return em.find(Produto.class, id);
 	}
-
+	//BuscarTodos
 	public List<Produto> buscarTodos() {
 		String jpql = "SELECT p FROM Produto p";
 		return em.createQuery(jpql, Produto.class).getResultList();
 	}
-
-	public List<Produto> buscarPorNome(String nome) {
-		String jpql = "SELECT p FROM Produto p WHERE p.nome = :nome";
-		return em.createQuery(jpql, Produto.class)
-				.setParameter("nome", nome)
-				.getResultList();
-	}
-
-	public List<Produto> buscarPorNomeDaCategoria(String nome) {
-		String jpql = "SELECT p FROM Produto p WHERE p.categoria.nome = :nome";
-		return em.createQuery(jpql, Produto.class)
-				.setParameter("nome", nome)
-				.getResultList();
-	}
-	
-	public BigDecimal buscarPrecoDoProdutoComNome(String nome) {
-		String jpql = "SELECT p.preco FROM Produto p WHERE p.nome = :nome";
-		return em.createQuery(jpql, BigDecimal.class)
-				.setParameter("nome", nome)
-				.getSingleResult();
-	}
+	//LimparLista
+	public void limparLista() {
+        em.createQuery("DELETE FROM Produto").executeUpdate();
+    }
 
 }

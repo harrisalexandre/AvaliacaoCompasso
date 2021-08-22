@@ -21,7 +21,7 @@ public class Produto {
 	private Integer quantidade;
 	private BigDecimal preco;
 	private LocalDate dataCriacao  = LocalDate.now();
-	private LocalDate dataAltecacao;
+	private LocalDate dataAltecacao  = LocalDate.now();
 	
 	//CONSTRUTOR
 	public Produto(String nome, String descricao, Integer quantidade, BigDecimal preco) {
@@ -29,7 +29,6 @@ public class Produto {
 		this.descricao = descricao;
 		this.quantidade = quantidade;
 		this.preco = preco;
-		this.dataCriacao = LocalDate.now();
 	}
 	
 	public Produto() {
@@ -77,5 +76,17 @@ public class Produto {
 	}
 	public void setDataAltecacao(LocalDate dataAltecacao) {
 		this.dataAltecacao = dataAltecacao;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("{Nome: %s, Descrição: %s, Preço: %.2f, Quantidade: %d, Criado em: %s, Alterado em: %s }", 
+			this.getNome(),
+			this.getDescricao(),
+			this.getPreco(),
+			this.getQuantidade(),
+			this.getDataCriacao().toString(),
+			this.getDataAltecacao().toString()
+		);
 	}
 }
